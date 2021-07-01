@@ -3,23 +3,24 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Collab extends Model {
+  class Message extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      models.Collab.belongsTo(models.User, {as: 'user', foreignKey: 'userId'})
+      models.Message.belongsTo(models.User, {as: 'user', foreignKey: 'userId'})
     }
   };
-  Collab.init({
-    userId: DataTypes.INTEGER,
-    receiverId: DataTypes.INTEGER
+  Message.init({
+    type: DataTypes.STRING,
+    accepted: DataTypes.BOOLEAN,
+    senderId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Collab',
+    modelName: 'Message',
   });
-  return Collab;
+  return Message;
 };

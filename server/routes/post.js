@@ -47,7 +47,7 @@ router.post('/:postId',  authenticate,(req, res)=>{
 
 })
 
-// localhost:3030/post/bands  (GET All BANDS POST)
+// localhost:3030/post/band (GET All BANDS POST)
 router.get('/band', (req, res)=>{
     
     models.Post.findAll({ 
@@ -56,7 +56,13 @@ router.get('/band', (req, res)=>{
         }, 
         order: [
             ['id', 'DESC']
-          ]
+          ],
+          include: [
+            {
+                model: models.User,
+                as: 'user'
+            }
+        ]
     })
     .then(posts => res.json(posts))
     
@@ -113,10 +119,16 @@ router.get('/talent', (req, res)=>{
         }, 
         order: [
             ['id', 'DESC']
-          ]
+          ],
+          include: [
+            {
+                model: models.User,
+                as: 'user'
+            }
+        ]
     })
     .then(posts => res.json(posts))
-    
+   
 })
 
 // localhost:3030/post/delete/1  (DELETE POST)
