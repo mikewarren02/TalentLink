@@ -7,6 +7,8 @@ const loginRouter = require('./routes/login')
 const postRouter = require('./routes/post')
 const memcoRouter = require('./routes/memco')
 const messageRouter = require('./routes/message')
+const userRouter = require('./routes/user')
+
 
 
 
@@ -25,6 +27,9 @@ app.use('/memco', memcoRouter)
 
 // localhost:3030/mess
 app.use('/mess', messageRouter)
+
+// localhost:3030/user
+app.use('/user', userRouter)
 
 
 

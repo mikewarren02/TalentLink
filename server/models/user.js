@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       models.User.hasMany(models.Post, { as: 'posts', foreignKey: 'userId' })
       models.User.hasMany(models.Membership, { as: 'memberships', foreignKey: 'userId' })
       models.User.hasMany(models.Collab, { as: 'collabs', foreignKey: 'userId' })
+      models.User.hasMany(models.Message, {as: 'messages', foreignKey: 'userId'})
 
     }
   };

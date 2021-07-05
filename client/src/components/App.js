@@ -1,9 +1,10 @@
 
+import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <h1>TalentLink</h1>
+      <h1>Hello, this is Bandeed The Coolest App in the nation.</h1>
     </div>
   );
 }

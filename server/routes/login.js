@@ -21,6 +21,7 @@ router.post("/", (req, res) => {
             token: token,
             id: user.id,
             isBand: user.isBand,
+            name: user.username
           });
         } else {
           res.json({ message: "Invalid password" });
@@ -28,7 +29,7 @@ router.post("/", (req, res) => {
       });
     })
     .catch((error) => {
-      res.json({ message: "User doesnt Exist!" });
+      res.json({ message: "User doesn't Exist!" });
     });
 });
 
@@ -64,5 +65,33 @@ router.post("/register", (req, res) => {
     });
   });
 });
+
+
+// localhost:3030/login/demo
+router.post("/", (req, res) => {
+  const name = 'demo'
+  const password = 'req.body.password';
+
+  models.User.findOne({
+    where: { username: name },
+  })
+    .then((user) => {
+      bcrypt.compare(password, user.password, (error, result) => {
+        if (result) {
+          var token = jwt.sign({ id: user.id }, process.env.JWT_KEY);
+          res.json({
+            success: true,
+            token: token,
+            id: user.id,
+            isBand: user.isBand,
+          });
+        } else {
+          res.json({ message: "Invalid password" });
+        }
+      });
+    })
+    
+});
+
 
 module.exports = router;
