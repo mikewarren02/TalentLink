@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-function Login(){
+function Bandroom(){
 
     return (
         <div>
-            <h1>Login</h1>
+            <h1>Bandroom</h1>
         </div>
     )
 }
 
 
-export default Login
+export default Bandroom

@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-function Login(){
+function Feed(){
 
     return (
         <div>
-            <h1>Login</h1>
+            <h1>Feed</h1>
         </div>
     )
 }
 
 
-export default Login
+export default Feed
