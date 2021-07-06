@@ -48,6 +48,7 @@ export const register = (credentials, props) => {
 export const loadPosts = (props) => {
     return (dispatch) => {
 
+        // post/ talent or band
         const type = props.type
 
         fetch(`localhost:3030/post/${type}`)
@@ -60,33 +61,20 @@ export const loadPosts = (props) => {
 }
 
 
-// LOADS MEMBERSHIP REQUESTS
+// LOADS MESSAGE REQUESTS
 export const loadMessages = (credentials) => {
     return (dispatch) => {
+        // mess / mems or colls / userId 
+        const type = credentials.type
 
-        fetch(`localhost:3030/mess/mems/${credentials}`)
+        fetch(`localhost:3030/mess/${type}/${credentials}`)
         .then(response => response.json())
         .then(memberships => {
-            dispatch({type: actionTypes.MEMBERSHIP_LOADED, payload: memberships})
+            dispatch({type: actionTypes.MESSAGE_LOADED, payload: memberships})
         })
 
     }
 }
-
-// LOADS COLLAB REQUESTS
-export const loadCollabs = (credentials) => {
-    return (dispatch) => {
-
-        fetch(`localhost:3030/mess/colls/${credentials}`)
-        .then(response => response.json())
-        .then(collabs => {
-            dispatch({type: actionTypes.COLLAB_LOADED, payload: collabs})
-        })
-
-    }
-}
-
-
 
 // LOADS POST BY SEARCH 
 export const searchPosts = (search) => {
@@ -109,7 +97,7 @@ export const searchPosts = (search) => {
 
 
 // POST MESSAGE REQUESTS
-export const collabReq = (credentials) => {
+export const sendMessage = (credentials) => {
     return (dispatch) => {
         fetch('localhost:3030/mess/send', {
             method: 'POST',
@@ -126,12 +114,53 @@ export const collabReq = (credentials) => {
 
 
 
-// ACCEPT MESSAGE REQUESTS
+// HANDLE MESSAGE REQUESTS
+export const optionRes = (message) => {
+    return (dispatch) =>{
+
+        // mess/acc or dec/ mess Id
+        const option = message.option
+        
+        fetch(`localhost:3030/mess/${option}/${message}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+        .then(option => {
+            dispatch({type: actionTypes.OPTION_RES, payload: option})
+        })
+    }
+}
+
+
+// LOAD USER RELATIONSHIPS
+export const userRels = (user) => {
+    return (dispatch) =>{
+
+        // memco/req-m or req-c/ userId
+        const type = user.type
+        
+        fetch(`localhost:3030/memco/${type}/${user}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+        .then(rels => {
+            dispatch({type: actionTypes.LOAD_RELS, payload: rels})
+        })
+    }
+}
 
 
 
 
-// DECLINE MESSAGE REQUESTS
+
+
+
+
+
 
 
 

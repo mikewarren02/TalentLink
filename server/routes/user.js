@@ -37,6 +37,27 @@ router.post("/:userId",  (req, res) => {
     });
   });
 
+// localhost:3030/user/:userId  (GET User Info)
+router.get('/peak/:userId', (req, res) => {
+  const user = req.params.userId
+
+  models.User.findOne({
+    where: {
+      id: user
+    },
+    include: [
+      {
+        model: models.Post,
+        as: "post",
+      },
+    ],
+  })
+
+
+})
+
+
+
 
 
 

@@ -110,7 +110,7 @@ router.post("/acc/:id", (req, res) => {
       });
 
       member.save().then((savedMember) => {
-        res.json({ success: true, message: "Membership saved successfully" });
+        res.json({ success: true, message: "Membership saved  successfully" });
 
         models.Message.destroy({
           where: { id: messId },

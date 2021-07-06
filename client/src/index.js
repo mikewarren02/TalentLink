@@ -10,6 +10,8 @@ import App from './components/App';
 import BaseLayout from './components/Baselayout';
 import { setAuthenticationHeader } from './utils/authenticate';
 import requireAuth from './components/auth'
+import * as actionTypes from './store/actions/actionTypes'
+
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -21,7 +23,7 @@ const token = localStorage.getItem("jsonwebtoken")
 setAuthenticationHeader(token)
 
 // perform a dispatch to change the global state based on the token
-store.dispatch({type: 'ON_LOGIN', payload: token})
+store.dispatch({type: actionTypes.ON_LOGIN, payload: token})
 
 
 ReactDOM.render(
