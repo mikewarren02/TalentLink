@@ -69,13 +69,6 @@ ReactDOM.render(
             <Route exact path = '/login' component = {SignIn} />
             <Route exact path = '/register' component = {SignUp} />
             
-
-
-
-
-           
-
-
          </Switch>
         </BaseLayout>
       </BrowserRouter>

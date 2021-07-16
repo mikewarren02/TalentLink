@@ -1,5 +1,3 @@
-import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 
 
 import React from 'react';
@@ -13,8 +11,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="#">
+        TalentLink
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

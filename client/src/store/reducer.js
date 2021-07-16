@@ -4,6 +4,7 @@ import * as actionTypes from './actions/actionTypes'
 const initialState = {
     isAuthenticated: false,
     isBand: false,
+    userId: null,
     posts: [],
     messages: [],
     relationships: []
@@ -17,7 +18,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state, 
                 isAuthenticated: action.payload != null ? true: false,
-                isBand: action.payload.isBand !== true ? false: true
+                isBand: action.payload.isBand !== true ? false: true,
+                userId: action.payload.id
             }
         case actionTypes.POST_LOADED:
             return {

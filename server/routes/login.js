@@ -37,11 +37,10 @@ router.post("/", (req, res) => {
 router.post("/register", (req, res) => {
   const name = req.body.name;
   const talent = req.body.talent;
-  const isBand = req.body.isBand;
+  const isBand = req.body.isBand ? null : false;
   const password = req.body.password;
-  const profile_pic = req.body.image;
-  const area = req.body.area;
-  const description = req.body.description;
+  const area = req.body.state;
+  
 
   bcrypt.genSalt(10, function (error, salt) {
     bcrypt.hash(password, salt, function (error, hash) {
@@ -51,9 +50,8 @@ router.post("/register", (req, res) => {
           password: hash,
           talent: talent,
           isBand: isBand,
-          profile_pic: profile_pic,
           area: area,
-          description: description,
+      
         });
 
         user.save().then((savedUser) => {
