@@ -16,10 +16,13 @@ import { useState } from "react";
 import MenuItem from '@material-ui/core/MenuItem';
 import states from '../utils/states.json'
 import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
+import * as actionCreators from '../store/creators/actionCreators'
 
 
 
-export default function SignUp(props) {
+
+ function SignUp(props) {
   const classes = useStyles();
   const [credentials, setCredentials] = useState({});
   
@@ -31,7 +34,6 @@ export default function SignUp(props) {
     })
 }
 
-    
     const newUser = (e) => {
         setCredentials({
             ...credentials,
@@ -43,32 +45,13 @@ export default function SignUp(props) {
     const  setNewValue = (e) =>{
         setCredentials({
             ...credentials,
-            state: e.target.value,
-            
-           
+            state: e.target.value
         })
-        console.log(credentials)
+     
       }
 
     const registerUser = () => {
-        console.log(credentials)
-        
-        fetch('http://localhost:3030/login/register', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                
-            },
-            body: JSON.stringify(credentials)
-        }).then((response) => response.json())
-        .then((result) =>{
-            if(result.success){
-
-                props.history.push('/login')
-                console.log('First success')
-                
-            }
-        })
+      props.onRegister(credentials)
     }
 
   return (
@@ -217,3 +200,14 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(3, 0, 2),
     },
   }));
+
+
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        onRegister: (credentials) => dispatch(actionCreators.register(credentials)),
+        
+    }
+}
+
+
+export default connect(null, mapDispatchToProps)(SignUp)

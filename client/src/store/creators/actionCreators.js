@@ -18,7 +18,7 @@ export const login = (credentials) => {
             if(result.success) {
                 const token = result.token 
                
-                // console.log(result)
+               
                 // get the token and put it in local storage 
                 localStorage.setItem("jsonwebtoken", token)
                 localStorage.setItem("id", result.id)
@@ -27,8 +27,6 @@ export const login = (credentials) => {
                
                  // set the authentication header 
                  setAuthenticationHeader(token)
-
-                console.log(result.data)
 
                     history.push('/dashboard')
             } 
