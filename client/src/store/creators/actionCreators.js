@@ -1,11 +1,11 @@
 import * as actionTypes from '../actions/actionTypes'
-
+import { setAuthenticationHeader } from '../../utils/authenticate'
+import history from '../../utils/history'
 
 // Login User
-export const login = (credentials, props) => {
+export const login = (credentials) => {
     return (dispatch) => {
-
-        fetch('localhost:3030/login', {
+        fetch('http://localhost:3030/login', {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json'
@@ -13,14 +13,30 @@ export const login = (credentials, props) => {
             body: JSON.stringify(credentials)
         }).then(response => response.json())
         .then(result => {
-            dispatch({type: actionTypes.ON_LOGIN, payload: result.success})
+            dispatch({type: actionTypes.ON_LOGIN, payload: result})
             // if user is logged in successfully then take user to dashboard page 
             if(result.success) {
-                props.history.push('/dashboard')
-            }
+                const token = result.token 
+               
+                // console.log(result)
+                // get the token and put it in local storage 
+                localStorage.setItem("jsonwebtoken", token)
+                localStorage.setItem("id", result.id)
+                localStorage.setItem('name', result.name)
+                localStorage.setItem('isBand', result.isBand)
+               
+                 // set the authentication header 
+                 setAuthenticationHeader(token)
+
+                console.log(result.data)
+
+                    history.push('/dashboard')
+            } 
         })
 
     }
+
+  
 }
 
 // Register User
@@ -37,7 +53,7 @@ export const register = (credentials, props) => {
         .then(result => {
             dispatch({type: actionTypes.ON_REGISTER, payload: result.success})
             if(result.success) {
-                props.history.push('/login')
+                history.push('/login')
             }
         })
 

@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import { useState } from "react";
 import MenuItem from '@material-ui/core/MenuItem';
 import states from '../utils/states.json'
-
+import { NavLink } from 'react-router-dom'
 
 
 
@@ -148,7 +148,7 @@ export default function SignUp(props) {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox name='isBand' onChange={setBand}  color="primary" />}
-                label="Im a Band looking to recruit."
+                label="Im a Band looking to recruit Musicians."
               />
               
             </Grid>
@@ -166,9 +166,11 @@ export default function SignUp(props) {
           
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <NavLink to='login'>
+              <Link variant="body2">
                 Already have an account? Sign in
               </Link>
+              </NavLink>
             </Grid>
           </Grid>
       

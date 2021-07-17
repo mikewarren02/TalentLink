@@ -11,6 +11,25 @@ router.post("/", (req, res) => {
 
   models.User.findOne({
     where: { username: name },
+    include: [
+      {
+        model: models.Post,
+        as: "posts",
+      },
+      {
+        model: models.Message,
+        as: "messages",
+      },
+      {
+        model: models.Membership,
+        as: "memberships",
+      },
+      {
+        model: models.Collab,
+        as: "collabs",
+      },
+      
+    ],
   })
     .then((user) => {
       bcrypt.compare(password, user.password, (error, result) => {
@@ -21,7 +40,8 @@ router.post("/", (req, res) => {
             token: token,
             id: user.id,
             isBand: user.isBand,
-            name: user.username
+            name: user.username,
+            data: user
           });
         } else {
           res.json({ message: "Invalid password" });
@@ -37,9 +57,10 @@ router.post("/", (req, res) => {
 router.post("/register", (req, res) => {
   const name = req.body.name;
   const talent = req.body.talent;
-  const isBand = req.body.isBand ? null : false;
+  const isBand = req.body.isBand ? true : false
   const password = req.body.password;
   const area = req.body.state;
+  
   
 
   bcrypt.genSalt(10, function (error, salt) {
@@ -66,7 +87,7 @@ router.post("/register", (req, res) => {
 
 
 // localhost:3030/login/demo
-router.post("/", (req, res) => {
+router.post("/demo", (req, res) => {
   const name = 'demo'
   const password = 'req.body.password';
 
@@ -82,6 +103,7 @@ router.post("/", (req, res) => {
             token: token,
             id: user.id,
             isBand: user.isBand,
+            name: user.username
           });
         } else {
           res.json({ message: "Invalid password" });

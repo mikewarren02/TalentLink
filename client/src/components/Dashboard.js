@@ -1,14 +1,27 @@
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-function Dashboard(){
+function Dashboard(props){
 
+    
     return (
         <div>
-            <h1>Dashboard</h1>
+      
+            <p>Welcome {props.user.username}, this is the Dashboard.</p>
+
+           
+
+          
+
         </div>
     )
 }
 
 
-export default Dashboard
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    }
+}
+
+export default connect(mapStateToProps)(Dashboard)

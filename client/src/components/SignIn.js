@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { setAuthenticationHeader } from '../utils/authenticate'
 import { useState } from 'react'
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,6 +15,8 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import * as actionCreators from '../store/creators/actionCreators'
+
 
 
 
@@ -32,46 +33,22 @@ function SignIn(props) {
         })
     }
 
-    const handleLogin = () => {
-        fetch('http://localhost:3030/login', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            }, 
-            body: JSON.stringify(credentials)
-        }).then(response => response.json())
-        .then(result => {
-            if(result.success) {
-                console.log('login successs')
-                const token = result.token 
-                const id = result.id
-                const name = result.name
-                const isBand = result.isBand
-               
-                console.log(result)
-                // get the token and put it in local storage 
-                localStorage.setItem("jsonwebtoken", token)
-                localStorage.setItem("id", id)
-                localStorage.setItem('name', name)
-                localStorage.setItem('isBand', isBand)
 
-                // set the authentication header 
-                setAuthenticationHeader(token)
-                // dispatch to redux 
-                props.onLogin(token) 
-                props.isBand(isBand)
-                props.userId(id)
-                // console.log(userType)
-                
-                // take the user to the dashboard screen 
-                props.history.push('/')
-            } else {
-                props.history.push('/login')
-                console.log('login failure')
-                console.log(credentials)
-            }
-        })
+    const handleLogin = () => {
+      props.onLogin(credentials)
+
     }
+
+
+    const handleDemo = () => {
+      const demo = {
+        name: 'demo', 
+        password: 'req.body.password'
+      }
+      props.onLogin(demo)
+
+    }
+
 
 
 
@@ -131,10 +108,11 @@ function SignIn(props) {
 
 
             <Grid item>
-              <Link href="/register" variant="body2">
+              <NavLink to="register">
+              <Link variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
-             
+              </NavLink>
             </Grid>
 
             
@@ -144,9 +122,8 @@ function SignIn(props) {
           <Button
             variant='outlined'
             type="submit"
-            
+            onClick = {handleDemo}
             color="primary"
-           
             className={classes.submit}
           >
             Demo
@@ -194,11 +171,8 @@ function Copyright() {
 
   const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (token) => dispatch({type: 'ON_LOGIN', payload: token}),
-        isBand: (value) => dispatch({type: 'IS_BAND', payload: value}),
-        userId: (id) => dispatch({type: 'USER_ID', payload: id})
-
-
+        onLogin: (credentials) => dispatch(actionCreators.login(credentials)),
+        
     }
 }
 

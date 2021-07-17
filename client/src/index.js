@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Route, BrowserRouter, Switch} from 'react-router-dom'
+import { Route, Router,  Switch} from 'react-router-dom'
 import {createStore, applyMiddleware, compose} from 'redux'
 import {Provider} from 'react-redux'
 import reducer from './store/reducer'
 import thunk from 'redux-thunk'
-import App from './components/App';
+import Dashboard from './components/Dashboard';
 import BaseLayout from './components/Baselayout';
 import { setAuthenticationHeader } from './utils/authenticate';
 import requireAuth from './components/auth'
@@ -15,6 +15,9 @@ import * as actionTypes from './store/actions/actionTypes'
 import {createMuiTheme, ThemeProvider} from '@material-ui/core'
 import SignIn from './components/SignIn.js';
 import SignUp from './components/SignUp.js';
+import createHistory from 'history/createBrowserHistory';
+import history from './utils/history'
+
 
 
 
@@ -62,16 +65,16 @@ ReactDOM.render(
     <CssBaseline />
     <ThemeProvider theme = {theme}>
     <Provider store={store}>
-      <BrowserRouter>
+      <Router history={history}>
         <BaseLayout>
          <Switch>
-            <Route exact path = '/' component = {App} />
+            <Route exact path = '/dashboard' component = {Dashboard} />
             <Route exact path = '/login' component = {SignIn} />
             <Route exact path = '/register' component = {SignUp} />
             
          </Switch>
         </BaseLayout>
-      </BrowserRouter>
+      </Router>
     </Provider>
     </ThemeProvider>
   </React.StrictMode>,
